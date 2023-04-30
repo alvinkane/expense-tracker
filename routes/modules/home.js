@@ -7,7 +7,7 @@ const router = express.Router();
 // 路由
 // 首頁
 router.get("/", (req, res) => {
-  res.send("HI");
+  res.render("index");
 });
 
 // 輸出

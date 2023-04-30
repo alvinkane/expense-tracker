@@ -1,5 +1,7 @@
 // 載入套件
 const express = require("express");
+const exphbs = require("express-handlebars");
+const mehthodOverride = require("method-override");
 
 // 載入mongoose
 require("./config/mongoose");
@@ -11,6 +13,16 @@ const routes = require("./routes");
 const port = process.env.PORT;
 
 const app = express();
+
+// 設定hbs
+app.engine("hbs", exphbs({ defaultLayout: "main", extname: "hbs" }));
+app.set("view engine", "hbs");
+
+// use body-parser
+app.use(express.urlencoded({ extended: true }));
+
+// use method-override
+app.use(mehthodOverride("_method"));
 
 // 設定路由
 app.use(routes);
