@@ -3,7 +3,6 @@ const Expense = require("../expense");
 
 // 載入json
 const expendRecordList = require("../expense.json").records;
-const expendCategoryList = require("../expense.json").category;
 
 // 載入連接狀態
 const db = require("../../config/mongoose");
@@ -23,3 +22,5 @@ db.once("open", () => {
   });
   console.log("done");
 });
+
+//  && node models/seeds/recordSeeder.js

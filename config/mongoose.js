@@ -10,6 +10,7 @@ if (process.env.NODE_ENV !== "production") {
 mongoose.connect(process.env.MONGODB_URI, {
   useUnifiedTopology: true,
   useNewUrlParser: true,
+  useCreateIndex: true,
 });
 
 // 取得練線狀態
