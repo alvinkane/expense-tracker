@@ -1,0 +1,80 @@
+<div class="contaniner mt-5">
+  <div class="row text-dark">
+    <div class="col-8 mx-auto position-relative">
+      <p class="position-absolute">*必填欄位</p>
+      <h3 class="d-flex justify-content-center mb-5">請輸入你的支出</h3>
+      <form action="/expenses/123?_method=PUT" method="POST">
+        <div class="mb-5 row">
+          <label for="name" class="col-sm-2 col-form-label">名稱<span>*</span>
+            :</label>
+          <div class="col-sm-8">
+            <input
+              type="text"
+              class="form-control"
+              id="name"
+              name="name"
+              value="name"
+              required
+            />
+          </div>
+        </div>
+        <div class="mb-5 row">
+          <label for="date" class="col-sm-2 col-form-label">日期<span>*</span>
+            :</label>
+          <div class="col-sm-8">
+            <input
+              type="date"
+              class="form-control"
+              id="date"
+              name="date"
+              value="name"
+              required
+            />
+          </div>
+        </div>
+        <div class="mb-5 row">
+          <label for="category" class="col-sm-2 col-form-label">類別<span
+            >*</span>
+            :</label>
+          <div class="col-sm-8">
+            <select
+              class="form-select"
+              id="category"
+              name="category"
+              value="name"
+              aria-label="Default select example"
+            >
+              <option selected>Open this select menu</option>
+              <option value="1">One</option>
+              <option value="2">Two</option>
+              <option value="3">Three</option>
+            </select>
+          </div>
+        </div>
+        <div class="mb-5 row">
+          <label for="amount" class="col-sm-2 col-form-label" min="0">金額<span
+            >*</span>
+            :</label>
+          <div class="col-sm-8">
+            <input
+              type="number"
+              class="form-control"
+              id="amount"
+              name="amount"
+              value="name"
+              required
+            />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-8 mx-auto d-flex">
+            <button
+              class="flex-fill btn btn-warning border border-3 border-dark text-dark"
+              type="submit"
+            >新增支出</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -13,5 +13,9 @@ router.get("/new", (req, res) => {
 
 router.post("/", (req, res) => {});
 
+router.get("/:expense_id/edit", (req, res) => {
+  res.render("edit");
+});
+
 // 輸出
 module.exports = router;
