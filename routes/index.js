@@ -4,10 +4,10 @@ const router = express.Router();
 
 // 連結各路由
 const home = require("./modules/home");
-const expences = require("./modules/expences");
+const expenses = require("./modules/expenses");
 
 // router.use
-router.use("/expences", expences);
+router.use("/expenses", expenses);
 router.use("/", home);
 
 // 輸出

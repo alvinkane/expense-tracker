@@ -7,12 +7,14 @@ const Expense = require("../../models/expense");
 const Category = require("../../models/category");
 
 // 路由
+// 新增頁面
 router.get("/new", (req, res) => {
   res.render("new");
 });
 
 router.post("/", (req, res) => {});
 
+// 修改頁面
 router.get("/:expense_id/edit", (req, res) => {
   const _id = req.params.expense_id;
   Category.find()
@@ -30,6 +32,19 @@ router.get("/:expense_id/edit", (req, res) => {
         })
         .catch((err) => console.log(err));
     });
+});
+
+router.put("/:expense_id", (req, res) => {
+  const _id = req.params.expense_id;
+  Category.findOne({ id: req.body.category })
+    .then((category) => {
+      const categoryId = category._id;
+      const expenseUpdate = { ...req.body, categoryId };
+      Expense.findByIdAndUpdate({ _id }, expenseUpdate)
+        .then(() => res.redirect("/"))
+        .catch((err) => console.log(err));
+    })
+    .catch((err) => console.log(err));
 });
 
 // 輸出
