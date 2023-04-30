@@ -1,7 +1,7 @@
 // 載入model
 const Category = require("../category");
 // 載入json
-const categoryList = require("../expense.json").categories;
+const categoryList = require("../../public/json/expense.json").categories;
 
 // 呼叫mongoose
 db = require("../../config/mongoose");

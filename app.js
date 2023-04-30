@@ -24,6 +24,9 @@ app.use(express.urlencoded({ extended: true }));
 // use method-override
 app.use(mehthodOverride("_method"));
 
+// 設定靜態網站
+app.use(express.static("public"));
+
 // 設定路由
 app.use(routes);
 
