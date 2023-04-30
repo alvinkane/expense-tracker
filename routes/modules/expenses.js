@@ -48,6 +48,7 @@ router.get("/:expense_id/edit", (req, res) => {
     });
 });
 
+// 修改
 router.put("/:expense_id", (req, res) => {
   const _id = req.params.expense_id;
   Category.findOne({ id: req.body.category })
@@ -58,6 +59,14 @@ router.put("/:expense_id", (req, res) => {
         .then(() => res.redirect("/"))
         .catch((err) => console.log(err));
     })
+    .catch((err) => console.log(err));
+});
+
+// 刪除
+router.delete("/:expense_id", (req, res) => {
+  const _id = req.params.expense_id;
+  Expense.findByIdAndDelete({ _id })
+    .then(() => res.redirect("/"))
     .catch((err) => console.log(err));
 });
 
