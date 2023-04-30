@@ -14,10 +14,6 @@ const expenseSchema = new Schema({
     type: String,
     required: true,
   },
-  // categoryId: {
-  //   type: String,
-  //   required: true,
-  // },
   amount: {
     type: String,
     required: true,

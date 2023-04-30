@@ -15,12 +15,14 @@
       <h1 class="d-flex justify-content-end text-warning fw-bold">25260</h1>
     </div>
   </div>
-  {{#each expences}}
+  {{#each expencesList}}
     <div class="row mt-3 justify-content-end">
       <div class="col-6">
         <div class="row text-dark">
-          <div class="col-2 d-flex justify-content-start align-items-center">
-            <i class="fa-solid fa-house text-info"></i>
+          <div
+            class="col-2 d-flex justify-content-start align-items-center text-info"
+          >
+            {{{this.icon}}}
           </div>
           <div class="col-8 d-flex flex-column">
             <p class="fs-5 mb-0">{{this.name}}</p>
