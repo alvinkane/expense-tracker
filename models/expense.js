@@ -14,7 +14,7 @@ const expenseSchema = new Schema({
     type: String,
     required: true,
   },
-  category: {
+  categoryId: {
     type: String,
     required: true,
   },
@@ -22,12 +22,16 @@ const expenseSchema = new Schema({
     type: String,
     required: true,
   },
-  categoryId: {
-    type: Schema.Types.ObjectId,
-    ref: "Category",
-    index: true,
+  userId: {
+    type: String,
     required: true,
   },
+  // categoryId: {
+  //   type: Schema.Types.ObjectId,
+  //   ref: "Category",
+  //   index: true,
+  //   required: true,
+  // },
 });
 
 // 輸出

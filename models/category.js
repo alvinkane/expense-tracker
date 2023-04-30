@@ -9,6 +9,10 @@ const categorySchema = new Schema({
     type: String,
     required: true,
   },
+  id: {
+    type: String,
+    required: true,
+  },
 });
 
 // 輸出
