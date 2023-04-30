@@ -7,7 +7,6 @@ const router = express.Router();
 // 使用Model
 const Expense = require("../../models/expense");
 const Category = require("../../models/category");
-const category = require("../../models/category");
 
 const categoryIcon = {
   家居物業: `<i class="fa-solid fa-house fa-xl"></i>`,
@@ -20,16 +19,20 @@ const categoryIcon = {
 // 路由
 // 首頁
 router.get("/", (req, res) => {
-  Expense.find()
-    .populate("categoryId") // 使得Expense與category連動
+  Category.find()
     .lean()
-    .then((expences) => {
-      const expencesList = expences.map((expence) => {
-        const categoryName = expence.categoryId.name;
-        // 將兩個物件連接在一起
-        return Object.assign(expence, { icon: categoryIcon[categoryName] });
-      });
-      return res.render("index", { expencesList });
+    .then((categoryList) => {
+      return Expense.find()
+        .populate("categoryId") // 使得Expense與category連動
+        .lean()
+        .then((expences) => {
+          const expencesList = expences.map((expence) => {
+            const categoryName = expence.categoryId.name;
+            // 將兩個物件連接在一起
+            return Object.assign(expence, { icon: categoryIcon[categoryName] });
+          });
+          return res.render("index", { expencesList, categoryList });
+        });
     });
 });
 

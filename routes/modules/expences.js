@@ -14,7 +14,14 @@ router.get("/new", (req, res) => {
 router.post("/", (req, res) => {});
 
 router.get("/:expense_id/edit", (req, res) => {
-  res.render("edit");
+  const _id = req.params.expense_id;
+  Expense.findOne({ _id })
+    .populate("categoryId")
+    .lean()
+    .then((expense) => {
+      res.render("edit", { expense });
+    })
+    .catch((err) => console.log(err));
 });
 
 // 輸出
