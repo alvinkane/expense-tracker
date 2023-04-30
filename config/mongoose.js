@@ -1,3 +1,4 @@
+// 載入套件
 const mongoose = require("mongoose");
 
 // 開發環境啟用dotenv
@@ -24,4 +25,5 @@ db.once("open", () => {
   console.log("mongodb connected");
 });
 
+// 輸出
 module.exports = db;
