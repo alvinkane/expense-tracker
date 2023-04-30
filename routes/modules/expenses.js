@@ -9,10 +9,24 @@ const Category = require("../../models/category");
 // 路由
 // 新增頁面
 router.get("/new", (req, res) => {
-  res.render("new");
+  Category.find()
+    .lean()
+    .then((categoryList) => {
+      res.render("new", { categoryList });
+    });
 });
 
-router.post("/", (req, res) => {});
+// 新增
+router.post("/", (req, res) => {
+  const categoryId = req.body.category;
+  Category.findOne({ id: categoryId })
+    .then((item) => {
+      const expense = { ...req.body, categoryId: item._id };
+      Expense.create(expense);
+    })
+    .then(() => res.redirect("/"))
+    .catch((err) => coppnsolelog(err));
+});
 
 // 修改頁面
 router.get("/:expense_id/edit", (req, res) => {

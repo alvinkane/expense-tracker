@@ -3,7 +3,7 @@
     <div class="col-8 mx-auto position-relative">
       <p class="position-absolute">*必填欄位</p>
       <h3 class="d-flex justify-content-center mb-5">請輸入你的支出</h3>
-      <form action="/" method="POST">
+      <form action="/expenses" method="POST">
         <div class="mb-5 row">
           <label for="name" class="col-sm-2 col-form-label">名稱<span>*</span>
             :</label>
@@ -41,10 +41,10 @@
               name="category"
               aria-label="Default select example"
             >
-              <option selected>Open this select menu</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
+              <option selected>Select</option>
+              {{#each categoryList}}
+                <option value="{{this.id}}">{{this.name}}</option>
+              {{/each}}
             </select>
           </div>
         </div>
