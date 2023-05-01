@@ -7,6 +7,8 @@ const session = require("express-session");
 // 載入mongoose
 require("./config/mongoose");
 
+const usePassport = require("./config/passport");
+
 // 載入路由
 const routes = require("./routes");
 
@@ -36,6 +38,8 @@ app.use(
     saveUninitialized: true,
   })
 );
+
+usePassport(app);
 
 // 設定路由
 app.use(routes);
