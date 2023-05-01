@@ -2,6 +2,7 @@
 const express = require("express");
 const exphbs = require("express-handlebars");
 const mehthodOverride = require("method-override");
+const session = require("express-session");
 
 // 載入mongoose
 require("./config/mongoose");
@@ -26,6 +27,15 @@ app.use(mehthodOverride("_method"));
 
 // 設定靜態網站
 app.use(express.static("public"));
+
+// 設定session
+app.use(
+  session({
+    secret: "ThisSecretIsForExtense",
+    resave: false,
+    saveUninitialized: true,
+  })
+);
 
 // 設定路由
 app.use(routes);
