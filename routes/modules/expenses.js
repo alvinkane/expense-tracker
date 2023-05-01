@@ -5,7 +5,6 @@ const router = express.Router();
 // 載入model
 const Expense = require("../../models/expense");
 const Category = require("../../models/category");
-const User = require("../../models/user");
 
 // 路由
 // 新增頁面
@@ -19,9 +18,9 @@ router.get("/new", (req, res) => {
 
 // 新增
 router.post("/", (req, res) => {
-  const categoryId = req.body.category;
+  const categorySelected = req.body.category;
   const userId = req.user._id;
-  Category.findOne({ id: categoryId })
+  Category.findOne({ id: categorySelected })
     .then((item) => {
       const expense = { ...req.body, categoryId: item._id, userId };
       Expense.create(expense);
