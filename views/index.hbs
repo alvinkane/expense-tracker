@@ -1,12 +1,27 @@
 <div class="container">
   <div class="row mt-3">
-    <div class="col-6 mx-auto">
-      <select class="form-select" aria-label="Default select example">
-        <option selected>類別</option>
+    <div class="dropdown col-6 mx-auto">
+      <button
+        class="btn btn-secondary dropdown-toggle w-100"
+        type="button"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+        {{#if sort}}
+          {{category}}
+        {{else}}
+          類別
+        {{/if}}
+      </button>
+      {{! 設定寬度使其與btn相同 }}
+      <ul class="dropdown-menu" style="width:calc(100% - 24px)">
         {{#each categoryList}}
-          <option value="{{this.id}}">{{this.name}}</option>
+          <li><a
+              class="dropdown-item"
+              href="/?value={{this.id}}"
+            >{{this.name}}</a></li>
         {{/each}}
-      </select>
+      </ul>
     </div>
   </div>
   <div class="row mt-4">

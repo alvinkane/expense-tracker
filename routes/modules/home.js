@@ -19,6 +19,19 @@ const categoryIcon = {
 // 路由
 // 首頁
 router.get("/", (req, res) => {
+  // 使用分類篩選
+  const sort = req.query.value || null;
+  let category = "";
+  // 用於修改dropdown內容
+  Category.find({ id: sort })
+    .then((item) => {
+      if (item[0]) {
+        return (category = item[0].name);
+      }
+    })
+    .catch((err) => console.log(err));
+
+  // 主程式
   Category.find()
     .lean()
     .then((categoryList) => {
@@ -26,11 +39,23 @@ router.get("/", (req, res) => {
         .populate("categoryId") // 使得Expense與category連動
         .lean()
         .then((expences) => {
-          const expencesList = expences.map((expence) => {
+          // 篩選
+          const expencesSort = expences.filter((expense) => {
+            if (sort) {
+              return expense.categoryId.id === sort;
+            } else {
+              return expense;
+            }
+          });
+          // 加入icon
+          const expencesList = expencesSort.map((expence) => {
             const categoryName = expence.categoryId.name;
             // 將兩個物件連接在一起
-            return Object.assign(expence, { icon: categoryIcon[categoryName] });
+            return Object.assign(expence, {
+              icon: categoryIcon[categoryName],
+            });
           });
+          // 計算總金額
           let totalAmount = 0;
           expencesList.forEach((item) => {
             totalAmount += Number(item.amount);
@@ -39,6 +64,8 @@ router.get("/", (req, res) => {
             expencesList,
             categoryList,
             totalAmount,
+            sort,
+            category,
           });
         });
     });
