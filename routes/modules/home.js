@@ -31,7 +31,15 @@ router.get("/", (req, res) => {
             // 將兩個物件連接在一起
             return Object.assign(expence, { icon: categoryIcon[categoryName] });
           });
-          return res.render("index", { expencesList, categoryList });
+          let totalAmount = 0;
+          expencesList.forEach((item) => {
+            totalAmount += Number(item.amount);
+          });
+          return res.render("index", {
+            expencesList,
+            categoryList,
+            totalAmount,
+          });
         });
     });
 });
