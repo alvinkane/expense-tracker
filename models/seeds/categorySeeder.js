@@ -10,7 +10,14 @@ db.once("open", () => {
   console.log("running recordSeeder script...");
   Promise.all(
     Array.from({ length: categoryList.length }, (_, i) =>
-      Category.create(categoryList[i])
+      Category.findOne({ name: categoryList[i].name }).then((name) => {
+        if (name) {
+          console.log("此類別已存在!");
+          return;
+        } else {
+          return Category.create(categoryList[i]);
+        }
+      })
     )
   ).then(() => {
     console.log("done");

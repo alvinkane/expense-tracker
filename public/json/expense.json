@@ -5,35 +5,35 @@
       "date": "2019-04-23",
       "amount": "60",
       "userIndex": "1",
-      "categoryId": "4"
+      "categoryIndex": "4"
     },
     {
       "name": "晚餐",
       "date": "2019-04-23",
       "amount": "60",
       "userIndex": "1",
-      "categoryId": "4"
+      "categoryIndex": "4"
     },
     {
       "name": "捷運",
       "date": "2019-04-23",
       "amount": "120",
       "userIndex": "1",
-      "categoryId": "2"
+      "categoryIndex": "2"
     },
     {
       "name": "電影:驚奇隊長",
       "date": "2019-04-23",
       "amount": "220",
       "userIndex": "2",
-      "categoryId": "3"
+      "categoryIndex": "3"
     },
     {
       "name": "租金",
       "date": "2015-4-01",
       "amount": "25000",
       "userIndex": "1",
-      "categoryId": "1"
+      "categoryIndex": "1"
     }
   ],
   "categories": [

@@ -27,7 +27,7 @@ router.post("/", (req, res) => {
       Expense.create(expense);
     })
     .then(() => res.redirect("/"))
-    .catch((err) => coppnsolelog(err));
+    .catch((err) => console.log(err));
 });
 
 // 修改頁面
