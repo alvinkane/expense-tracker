@@ -19,8 +19,10 @@ const expenseSchema = new Schema({
     required: true,
   },
   userId: {
-    type: String,
-    // required: true,
+    type: Schema.Types.ObjectId,
+    ref: "User",
+    index: true,
+    required: true,
   },
   categoryId: {
     type: Schema.Types.ObjectId,
