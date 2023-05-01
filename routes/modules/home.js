@@ -19,6 +19,7 @@ const categoryIcon = {
 // 路由
 // 首頁
 router.get("/", (req, res) => {
+  const userId = req.user._id;
   // 使用分類篩選
   const sort = req.query.value || null;
   let category = "";
@@ -35,33 +36,43 @@ router.get("/", (req, res) => {
   Category.find()
     .lean()
     .then((categoryList) => {
-      return Expense.find()
+      return Expense.find({ userId })
         .populate("categoryId") // 使得Expense與category連動
         .lean()
-        .then((expences) => {
-          // 篩選
-          const expencesSort = expences.filter((expense) => {
-            if (sort) {
-              return expense.categoryId.id === sort;
-            } else {
-              return expense;
-            }
-          });
-          // 加入icon
-          const expencesList = expencesSort.map((expence) => {
-            const categoryName = expence.categoryId.name;
-            // 將兩個物件連接在一起
-            return Object.assign(expence, {
-              icon: categoryIcon[categoryName],
-            });
-          });
-          // 計算總金額
+        .then((expenses) => {
           let totalAmount = 0;
-          expencesList.forEach((item) => {
-            totalAmount += Number(item.amount);
-          });
+          // 如果有資料的話，需要先對資料處理
+          if (expenses) {
+            // 篩選
+            const expencesSort = expenses.filter((expense) => {
+              if (sort) {
+                return expense.categoryId.id === sort;
+              } else {
+                return expense;
+              }
+            });
+            // 加入icon
+            const expencesList = expencesSort.map((expence) => {
+              const categoryName = expence.categoryId.name;
+              // 將兩個物件連接在一起
+              return Object.assign(expence, {
+                icon: categoryIcon[categoryName],
+              });
+            });
+            // 計算總金額
+            expencesList.forEach((item) => {
+              totalAmount += Number(item.amount);
+            });
+            return res.render("index", {
+              expencesList,
+              categoryList,
+              totalAmount,
+              sort,
+              category,
+            });
+          }
+          // 如果沒有資料，值接到首頁
           return res.render("index", {
-            expencesList,
             categoryList,
             totalAmount,
             sort,

@@ -5,6 +5,7 @@ const router = express.Router();
 // 載入model
 const Expense = require("../../models/expense");
 const Category = require("../../models/category");
+const User = require("../../models/user");
 
 // 路由
 // 新增頁面
@@ -19,9 +20,10 @@ router.get("/new", (req, res) => {
 // 新增
 router.post("/", (req, res) => {
   const categoryId = req.body.category;
+  const userId = req.user._id;
   Category.findOne({ id: categoryId })
     .then((item) => {
-      const expense = { ...req.body, categoryId: item._id };
+      const expense = { ...req.body, categoryId: item._id, userId };
       Expense.create(expense);
     })
     .then(() => res.redirect("/"))
@@ -31,10 +33,11 @@ router.post("/", (req, res) => {
 // 修改頁面
 router.get("/:expense_id/edit", (req, res) => {
   const _id = req.params.expense_id;
+  const userId = req.user._id;
   Category.find()
     .lean()
     .then((categoryList) => {
-      Expense.findOne({ _id })
+      Expense.findOne({ _id, userId })
         .populate("categoryId")
         .lean()
         .then((expense) => {
@@ -51,11 +54,12 @@ router.get("/:expense_id/edit", (req, res) => {
 // 修改
 router.put("/:expense_id", (req, res) => {
   const _id = req.params.expense_id;
+  const userId = req.user._id;
   Category.findOne({ id: req.body.category })
     .then((category) => {
       const categoryId = category._id;
       const expenseUpdate = { ...req.body, categoryId };
-      Expense.findByIdAndUpdate({ _id }, expenseUpdate)
+      Expense.findByIdAndUpdate({ _id, userId }, expenseUpdate)
         .then(() => res.redirect("/"))
         .catch((err) => console.log(err));
     })
@@ -65,7 +69,8 @@ router.put("/:expense_id", (req, res) => {
 // 刪除
 router.delete("/:expense_id", (req, res) => {
   const _id = req.params.expense_id;
-  Expense.findByIdAndDelete({ _id })
+  const userId = req.user._id;
+  Expense.findByIdAndDelete({ _id, userId })
     .then(() => res.redirect("/"))
     .catch((err) => console.log(err));
 });
