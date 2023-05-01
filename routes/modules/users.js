@@ -52,5 +52,11 @@ router.post("/register", (req, res) => {
     .catch((err) => console.log(err));
 });
 
+// 登出
+router.get("/logout", (req, res) => {
+  req.logout();
+  res.redirect("/users/login");
+});
+
 // 輸出
 module.exports = router;

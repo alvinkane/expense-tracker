@@ -15,7 +15,11 @@
       <nav class="navbar bg-body-tertiary justify-content-between">
         <div class="container-fluid">
           <a class="navbar-brand" href="/">家庭記事本</a>
-          <a class="btn btn-primary" href="/users/login">登入</a>
+          {{#if isAuthenticated}}
+            <a class="btn btn-primary" href="/users/logout">登出</a>
+          {{else}}
+            <a class="btn btn-primary" href="/users/login">登入</a>
+          {{/if}}
         </div>
       </nav>
     </header>
