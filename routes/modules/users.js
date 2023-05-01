@@ -15,9 +15,18 @@ router.get("/login", (req, res) => {
 // 登入
 router.post(
   "/login",
+  (req, res, next) => {
+    const { email, password } = req.body;
+    if (!email || !password) {
+      req.flash("warning_msg", "請輸入帳號及密碼!");
+      return res.redirect("/users/login");
+    }
+    next();
+  },
   passport.authenticate("local", {
     successRedirect: "/",
     failureRedirect: "/users/login",
+    failureFlash: true,
   })
 );
 
@@ -30,24 +39,40 @@ router.get("/register", (req, res) => {
 router.post("/register", (req, res) => {
   const { name, email, password, confirmPassword } = req.body;
   // 判斷是否皆有填或正不正確
+  const errors = [];
   if (!email || !password || !confirmPassword) {
-    console.log('Email及Password必填!"');
-    res.render("/register", { name, email, password, confirmPassword });
+    errors.push({ message: "Email及Password必填!" });
   }
   if (password !== confirmPassword) {
-    console.log("密碼與確認密碼不相符!");
-    res.render("/register", { name, email, password, confirmPassword });
+    errors.push({ message: "密碼與確認密碼不相符!" });
+  }
+  if (errors.length) {
+    return res.render("register", {
+      errors,
+      name,
+      email,
+      password,
+      confirmPassword,
+      errors,
+    });
   }
   User.findOne({ email })
     .then((user) => {
       // 判斷是否有註冊
       if (user) {
-        console.log("這個Email已經註冊過了!");
-        res.render("/register", { name, email, password, confirmPassword });
+        errors.push({ message: "這個Email已經註冊過了!" });
+        res.render("register", {
+          errors,
+          name,
+          email,
+          password,
+          confirmPassword,
+        });
+      } else {
+        User.create(req.body)
+          .then(() => res.redirect("/users/login"))
+          .catch((err) => console.log(err));
       }
-      User.create(req.body)
-        .then(() => res.redirect("/users/login"))
-        .catch((err) => console.log(err));
     })
     .catch((err) => console.log(err));
 });
@@ -55,6 +80,7 @@ router.post("/register", (req, res) => {
 // 登出
 router.get("/logout", (req, res) => {
   req.logout();
+  req.flash("success_msg", "你已經成功登出。");
   res.redirect("/users/login");
 });
 

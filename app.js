@@ -3,6 +3,7 @@ const express = require("express");
 const exphbs = require("express-handlebars");
 const mehthodOverride = require("method-override");
 const session = require("express-session");
+const flash = require("connect-flash");
 
 // 載入mongoose
 require("./config/mongoose");
@@ -39,12 +40,18 @@ app.use(
   })
 );
 
+// 登入狀態
 usePassport(app);
+
+// 訊息
+app.use(flash());
 
 // 設定本地變數
 app.use((req, res, next) => {
   res.locals.isAuthenticated = req.isAuthenticated();
   res.locals.user = req.user;
+  res.locals.success_msg = req.flash("success_msg");
+  res.locals.warning_msg = req.flash("warning_msg");
   next();
 });
 

@@ -13,22 +13,31 @@ module.exports = (app) => {
 
   // 本地端策略
   passport.use(
-    new localStrategy({ usernameField: "email" }, (email, password, done) => {
-      User.findOne({ email })
-        .then((user) => {
-          // 錯誤條件
-          if (!user) {
-            console.log("帳號或密碼不正確!");
-            return done(null, false);
-          }
-          if (user.password !== password) {
-            console.log("帳號或密碼不正確!");
-            return done(null, false);
-          }
-          return done(null, user);
-        })
-        .catch((err) => done(err, false));
-    })
+    new localStrategy(
+      { usernameField: "email", passReqToCallback: true },
+      (req, email, password, done) => {
+        User.findOne({ email })
+          .then((user) => {
+            // 錯誤條件
+            if (!user) {
+              return done(
+                null,
+                false,
+                req.flash("warning_msg", "帳號或密碼不正確!")
+              );
+            }
+            if (user.password !== password) {
+              return done(
+                null,
+                false,
+                req.flash("warning_msg", "帳號或密碼不正確!")
+              );
+            }
+            return done(null, user);
+          })
+          .catch((err) => done(err, false));
+      }
+    )
   );
 
   // 序列化
